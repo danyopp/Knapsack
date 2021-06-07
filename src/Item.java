@@ -3,6 +3,7 @@ public class Item {
    private int value;
    private String name;
 
+   //Constructors
     public Item (int weight, int value){
         this.value = value;
         this.weight = weight;
@@ -13,6 +14,7 @@ public class Item {
         this.name = name;
     }
 
+    //Getters
     public int getWeight() {
         return weight;
     }

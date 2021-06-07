@@ -6,25 +6,24 @@ import java.util.List;
 //  No multiple Items can be used unless it appears in the availableItems list more than once
 //
 
-
+/*          Sample Table
+                        Capacity
+                    0   1   2   3   4   5
+Item    v=2 w=1  0  0   2   2   2   2   2
+Index   v=3 w=3  1  0   2   2   3   5   5
+                 2  0
+                 3  0
+                 4  0
+                 5  0
+ */
 public class Knapsack1 {
+
     int PackMaxWeight;
     ItemList availableItems;
-    List<Item> bestItems = new ArrayList<>();
-
     DPdata[][] arrayDP ;
-    /*          Sample Table
-                            Capacity
-                        0   1   2   3   4   5
-    Item    v=2 w=1  0  0   2   2   2   2   2
-    Index   v=3 w=3  1  0   2   2   3   5   5
-                     2  0
-                     3  0
-                     4  0
-                     5  0
-     */
 
-
+    //Constructor that will fill in packweight and the list of available items and then call the class functions to build
+    //the Dynamic Programming table
     Knapsack1(int maxPackWeight, ItemList availableItems){
         this.PackMaxWeight = maxPackWeight;
         this.availableItems = availableItems;
@@ -32,6 +31,9 @@ public class Knapsack1 {
         findBestFit();
     }
 
+    //Helper function that sets up the first row in the table with a value of zero if the first item cant fit and the value
+    //of the first item if it can fit. It then fills in the 0 column with all zeros since no item can fit in a knapsack with capacity zero
+    //This function helps to simplify the logic of the function "findBestFit" that actually fills the entire DP table
     private void setUpTableEdge(){
         //Set first row with single item
         for(int i = 0; i < PackMaxWeight+1; i++){
@@ -52,6 +54,13 @@ public class Knapsack1 {
         }
     }
 
+    //Function that calls helper to set up Dynamic programming table and then completes a logic analysis for each spot in table
+    //There are three options:
+        //1. The item of the row will not fit in a knapsack of the given capacity
+        //2. The item of the row will fit in the knapsack of the given capacity
+            //2a. The value of the item and the value of the remaining space is greater than or equal to the previous best for that capacity
+            //2b. The value of the item and the value of the remaining space is less than or equal to the previous best for that capacity
+        //In the event the capacities are equal, this code uses the new item in the solution
     private void findBestFit(){
         setUpTableEdge();
         //Add items to dynamic programing array
@@ -89,6 +98,7 @@ public class Knapsack1 {
         }
     }
 
+    //Function for printing out the Dynamic Programming table
     public void printDP(){
         System.out.println("\nDYNAMIC PROGRAMMING CHART:");
         System.out.print("                ");
@@ -110,12 +120,13 @@ public class Knapsack1 {
         }
     }
 
+    //returns the list of items form the Final square of the DP table
     public List getBestResult(){
         return arrayDP[availableItems.size()-1][PackMaxWeight].itemsInPack;
     }
 
+    //Prints list items, DP table, and best combo of items
     public void printBestResults(){
-
         availableItems.printList();
         printDP();
         System.out.println("\nBEST COMBO OF ITEMS:");
@@ -125,7 +136,7 @@ public class Knapsack1 {
         System.out.println("");
     }
 
-    //class used to hold more information in the Dynamic Programming array
+    //class used to hold more information about best solution in the Dynamic Programming array
     class DPdata{
         int totalValue = 0;
         int totalWeight = 0;
