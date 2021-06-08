@@ -11,6 +11,7 @@ public class Main {
         itemsList.addItem(new Item(7, 75, "Map"));
         itemsList.addItem(new Item(6, 57, "Trail mix"));
         itemsList.addItem(new Item(2, 18, "Sleeping Bag"));
+        itemsList.addItem(new Item(2,18,  "Sleeping Pad"));
 
         //Use the knapsack class to determine best results
         Knapsack1 sack = new Knapsack1(14, itemsList);
