@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ItemList {
 
-    private List<Item> itemList = new ArrayList();
+    private ArrayList<Item> itemList = new ArrayList();
 
     //Add item to the Itemlist arraylist
     public void addItem(Item newItem){
@@ -38,10 +38,20 @@ public class ItemList {
         return itemList.size();
     }
 
+    //puts item list in reverse order (largest to smallest) based on the ratio variable.
+    // This means items with the best value to ratio will appear first in the itemList arraylist
     public void sortByRatio(){
         Collections.sort(itemList, (o1, o2) -> -Double.compare(o1.getRatio(), o2.getRatio()));
     }
 
+    public ItemList clone(){
 
+        ItemList newList = new ItemList();
+        newList.itemList = (ArrayList<Item>)this.itemList.clone();
+        return newList;
+    }
 
+    public Item pop(){
+        return itemList.remove(0);
+    }
 }

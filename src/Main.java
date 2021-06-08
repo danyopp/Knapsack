@@ -13,12 +13,10 @@ public class Main {
         itemsList.addItem(new Item(2, 18, "Sleeping Bag"));
         itemsList.addItem(new Item(2,18,  "Sleeping Pad"));
 
-        itemsList.printList();
-        itemsList.sortByRatio();
-        itemsList.printList();
 
         //Use the knapsack class to determine best results
-        Knapsack1 sack = new Knapsack1(14, itemsList);
+        Knapsack sack = new Knapsack2(14, itemsList);
         sack.printBestResults();
+
     }
 }
