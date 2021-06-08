@@ -16,7 +16,7 @@ Index   v=3 w=3  1  0   2   2   3   5   5
                  4  0
                  5  0
  */
-public class Knapsack1 {
+public class Knapsack1 implements Knapsack {
 
     int PackMaxWeight;
     ItemList availableItems;
@@ -61,7 +61,7 @@ public class Knapsack1 {
             //2a. The value of the item and the value of the remaining space is greater than or equal to the previous best for that capacity
             //2b. The value of the item and the value of the remaining space is less than or equal to the previous best for that capacity
         //In the event the capacities are equal, this code uses the new item in the solution
-    private void findBestFit(){
+    public void findBestFit(){
         setUpTableEdge();
         //Add items to dynamic programing array
         for(int curItemCounter = 1; curItemCounter < availableItems.size(); curItemCounter++){

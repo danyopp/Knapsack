@@ -2,11 +2,13 @@ public class Item {
    private int weight;
    private int value;
    private String name;
+   private double ratio;
 
    //Constructors
     public Item (int weight, int value){
         this.value = value;
         this.weight = weight;
+        this.ratio = (double)this.value/this.weight;
     }
 
     public Item (int weight, int value, String name){
@@ -25,5 +27,9 @@ public class Item {
 
     public int getValue() {
         return value;
+    }
+
+    public double getRatio() {
+        return ratio;
     }
 }

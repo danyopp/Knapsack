@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ItemList {
@@ -28,11 +30,18 @@ public class ItemList {
     //Print the list of items
     public void printList(){
         System.out.println("AVAILABLE ITEMS:");
-        itemList.forEach((n)-> System.out.println("Name: " + String.format("%1$"+15+"s", n.getName()) + "    Weight: " + n.getWeight() + "   Value: " +n.getValue()));
+        itemList.forEach((n)-> System.out.println("Name: " + String.format("%1$"+15+"s", n.getName()) + "    Weight: " + n.getWeight() + "   Value: " +n.getValue() + "   Ratio: " + n.getRatio()));
     }
 
     //Get the number of items in the arraylist
     public int size(){
         return itemList.size();
     }
+
+    public void sortByRatio(){
+        Collections.sort(itemList, (o1, o2) -> -Double.compare(o1.getRatio(), o2.getRatio()));
+    }
+
+
+
 }
