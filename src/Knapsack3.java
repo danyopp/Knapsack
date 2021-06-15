@@ -22,37 +22,30 @@ public class Knapsack3 implements Knapsack{
         //basecase
         if(endIndex - startIndex == 0){
             Item item = availableItems.getItem(startIndex);
-            if(item.getWeight() <= PackMaxWeight) {
+            if(item.getWeight() <= weight) {
                 return new KnapResult(item.getValue(), item.getWeight(), item);
             }else{
                 return new KnapResult(0,0,null);
             }
         }
-        //recursion
-            //last option was better
-            KnapResult noItem = recursiveKnap(startIndex, endIndex-1, weight);
-            System.out.println("\nNoItem");
-            noItem.print();
-            //use current item as well as best of whats remaining
-            Item curItem = availableItems.getItem(endIndex);
-            int adjustedWeight = weight - curItem.getWeight();
-            KnapResult minusItem = recursiveKnap(startIndex, endIndex-1, adjustedWeight);
-            System.out.println("minusItem");
-            minusItem.print();
-            int valWithItem = minusItem.currentValue + curItem.getValue();
-            //compare the two recursive calls for results
-            System.out.println("-------\n");
-            if(valWithItem > noItem.currentValue && (minusItem.currentWeight + curItem.getWeight()) <= PackMaxWeight ){
-                minusItem.currentValue += curItem.getValue();
-                minusItem.CurrentKnapsack.add(curItem);
-                return minusItem;
-            }else{
-                return noItem;
-            }
-
+        //recursive call to get the previous best
+        KnapResult noItem = recursiveKnap(startIndex, endIndex-1, weight);
+        Item curItem = availableItems.getItem(endIndex);
+        int adjustedWeight = weight - curItem.getWeight();
+        //recursive call with current item index and weight removed from parameters
+        KnapResult minusItem = recursiveKnap(startIndex, endIndex-1, adjustedWeight);
+        int valWithItem = minusItem.currentValue + curItem.getValue();
+        int totalWeightWithNewItem = minusItem.currentWeight + curItem.getWeight();
+        //compare if adding the item to an adjusted weight knapsack or taking a previous best knapsack is a better value
+        if(valWithItem >= noItem.currentValue && totalWeightWithNewItem <= weight ){
+            //Add item to best list with adjusted weight
+            minusItem.addAnotherItem(curItem);
+            return minusItem;
+        }else{
+            //Don't add the item, just take previous best
+            return noItem;
+        }
     }
-
-
 
     public void printBestResults(){
         System.out.println("Total weight: " + finalResult.currentWeight);
@@ -74,12 +67,13 @@ public class Knapsack3 implements Knapsack{
             }
         }
 
-        KnapResult(int currentValue, int currentWeight, Item single, ArrayList<Item> CurrentKnapsack){
-            this(currentValue, currentWeight, single);
-            this.CurrentKnapsack = CurrentKnapsack;
-            if(single != null){
-                CurrentKnapsack.add(single);
+        void addAnotherItem(Item i){
+            if((i.getWeight() + currentWeight) > PackMaxWeight){
+                throw new IllegalStateException();
             }
+            this.currentWeight += i.getWeight();
+            this.currentValue += i.getValue();
+            CurrentKnapsack.add(i);
         }
 
         void print(){
