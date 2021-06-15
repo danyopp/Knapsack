@@ -15,7 +15,7 @@ public class Main {
 
 
         //Use the knapsack class to determine best results
-        Knapsack sack = new Knapsack1(14, itemsList);
+        Knapsack sack = new Knapsack3(14, itemsList);
         sack.printBestResults();
 
     }
